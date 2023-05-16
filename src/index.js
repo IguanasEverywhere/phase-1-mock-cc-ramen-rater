@@ -7,15 +7,14 @@ function getAllRamen() {
   .then(res => res.json())
   .then(ramens => {
     allRamen = ramens;
+    displayRamenDetail(allRamen[0]);
     ramenMenu.innerHTML = '';
     allRamen.forEach(ramen => appendRamensToDom(ramen))
-
   })
 }
 getAllRamen();
 
 function appendRamensToDom(ramen) {
-  // ramenMenu.innerHTML = '';
   const ramenMenuImg = document.createElement('img');
   ramenMenuImg.src = ramen.image;
   ramenMenuImg.addEventListener('click', () => {
@@ -56,7 +55,17 @@ newRamenForm.addEventListener('submit', (e) => {
   }
   allRamen.push(newRamenObj);
 
-  appendRamensToDom(newRamenObj)
+  appendRamensToDom(newRamenObj);
+})
 
+const editRamenForm = document.querySelector('#edit-ramen');
+editRamenForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const editCommentVal = document.querySelector('#edit-comment').value;
+  const editRatingVal = document.querySelector('#edit-rating').value;
 
+  const ramenRating = document.querySelector('#rating-display'); // could put these in global to avoid redeclaring
+  const ramenComment = document.querySelector('#comment-display');
+  ramenRating.textContent = editRatingVal;
+  ramenComment.textContent = editCommentVal;
 })
