@@ -4,13 +4,13 @@ const ramenMenu = document.querySelector('#ramen-menu');
 
 function getAllRamen() {
   fetch('http://localhost:3000/ramens')
-  .then(res => res.json())
-  .then(ramens => {
-    allRamen = ramens;
-    displayRamenDetail(allRamen[0]);
-    ramenMenu.innerHTML = '';
-    allRamen.forEach(ramen => appendRamensToDom(ramen))
-  })
+    .then(res => res.json())
+    .then(ramens => {
+      allRamen = ramens;
+      displayRamenDetail(allRamen[0]);
+      ramenMenu.innerHTML = '';
+      allRamen.forEach(ramen => appendRamensToDom(ramen))
+    })
 }
 getAllRamen();
 
@@ -69,3 +69,30 @@ editRamenForm.addEventListener('submit', (e) => {
   ramenRating.textContent = editRatingVal;
   ramenComment.textContent = editCommentVal;
 })
+
+const deleteBtn = document.querySelector('#delete-ramen-btn');
+deleteBtn.addEventListener('click', () => {
+  const ramenDetailName = document.querySelectorAll('.name')[0];
+  const ramenRestaurant = document.querySelectorAll('.restaurant')[0];
+  deleteCurrentRamen(ramenDetailName.innerHTML, ramenRestaurant.innerHTML)
+});
+
+function deleteCurrentRamen(currentName, currentRestaurant) {
+  for (let ramen of allRamen) {
+    if (ramen.name === currentName && ramen.restaurant === currentRestaurant) {
+      let ramenToDeleteIdx = allRamen.indexOf(ramen);
+      allRamen.splice(ramenToDeleteIdx, 1);
+    }
+  }
+  let currentRamenSrc = document.querySelectorAll('.detail-image')[0].src;
+
+  for (let i = 0; i < ramenMenu.children.length; i++) {
+    if (ramenMenu.children[i].src === currentRamenSrc) {
+      ramenMenu.children[i].remove();
+    }
+  }
+
+  displayRamenDetail(allRamen[0]);
+
+
+}
