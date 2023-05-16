@@ -84,15 +84,7 @@ function deleteCurrentRamen(currentName, currentRestaurant) {
       allRamen.splice(ramenToDeleteIdx, 1);
     }
   }
-  let currentRamenSrc = document.querySelectorAll('.detail-image')[0].src;
-
-  for (let i = 0; i < ramenMenu.children.length; i++) {
-    if (ramenMenu.children[i].src === currentRamenSrc) {
-      ramenMenu.children[i].remove();
-    }
-  }
-
+  ramenMenu.innerHTML = '';
+  allRamen.forEach(ramen => appendRamensToDom(ramen));
   displayRamenDetail(allRamen[0]);
-
-
 }
