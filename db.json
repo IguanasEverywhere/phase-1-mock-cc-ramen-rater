@@ -5,16 +5,8 @@
       "name": "Shoyu Ramen",
       "restaurant": "Nonono",
       "image": "./assets/ramen/shoyu.jpg",
-      "rating": 7,
-      "comment": "Delish. Can't go wrong with a classic!"
-    },
-    {
-      "id": 2,
-      "name": "Naruto Ramen",
-      "restaurant": "Naruto",
-      "image": "./assets/ramen/naruto.jpg",
-      "rating": 10,
-      "comment": "My absolute fave!"
+      "rating": "6",
+      "comment": "Not as good as I remember."
     },
     {
       "id": 3,
@@ -39,6 +31,14 @@
       "image": "./assets/ramen/kojiro.jpg",
       "rating": 6,
       "comment": "Perfect for a cold night."
+    },
+    {
+      "name": "Scott Schwab",
+      "restaurant": "My Restaurant",
+      "image": "https://i5.walmartimages.com/asr/0340430e-0246-4f81-8dab-e98323e6b26e_1.741acfc9f06cea3593e00c7c116999ec.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
+      "rating": "9",
+      "comment": "blah blah blah",
+      "id": 6
     }
   ]
 }

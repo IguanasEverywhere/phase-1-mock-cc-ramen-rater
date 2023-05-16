@@ -56,6 +56,17 @@ newRamenForm.addEventListener('submit', (e) => {
   allRamen.push(newRamenObj);
 
   appendRamensToDom(newRamenObj);
+
+  fetch(`http://localhost:3000/ramens`, {
+    method: 'POST',
+    headers: {
+      'Content-Type' : 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify(newRamenObj)
+  })
+  .then(res => res.json())
+  .then(confirm => console.log(confirm))
 })
 
 const editRamenForm = document.querySelector('#edit-ramen');
@@ -68,6 +79,24 @@ editRamenForm.addEventListener('submit', (e) => {
   const ramenComment = document.querySelector('#comment-display');
   ramenRating.textContent = editRatingVal;
   ramenComment.textContent = editCommentVal;
+
+  const ramenDetailName = document.querySelectorAll('.name')[0].innerHTML;
+  const ramenRestaurant = document.querySelectorAll('.restaurant')[0].innerHTML;
+  let featuredRamen = allRamen.find(ramen => (ramen.name === ramenDetailName && ramen.restaurant === ramenRestaurant));
+  let featuredRamenId = featuredRamen.id;
+  fetch(`http://localhost:3000/ramens/${featuredRamenId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type' : 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify({
+      rating: editRatingVal,
+      comment: editCommentVal
+    })
+  })
+  .then(res => res.json())
+  .then(confirm => console.log(confirm))
 })
 
 const deleteBtn = document.querySelector('#delete-ramen-btn');
@@ -78,8 +107,10 @@ deleteBtn.addEventListener('click', () => {
 });
 
 function deleteCurrentRamen(currentName, currentRestaurant) {
+  let ramenToDelete;
   for (let ramen of allRamen) {
     if (ramen.name === currentName && ramen.restaurant === currentRestaurant) {
+      ramenToDelete = ramen;
       let ramenToDeleteIdx = allRamen.indexOf(ramen);
       allRamen.splice(ramenToDeleteIdx, 1);
     }
@@ -87,4 +118,17 @@ function deleteCurrentRamen(currentName, currentRestaurant) {
   ramenMenu.innerHTML = '';
   allRamen.forEach(ramen => appendRamensToDom(ramen));
   displayRamenDetail(allRamen[0]);
+
+  let ramenToDeleteId = ramenToDelete.id;
+  fetch(`http://localhost:3000/ramens/${ramenToDeleteId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type' : 'application/json',
+      Accept: 'application/json'
+    }
+  })
+  .then(res => res.json())
+  .then(confirm => console.log(confirm))
+
+
 }
